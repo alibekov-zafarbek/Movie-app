@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { findRenderedDOMComponentWithClass } from "react-dom/cjs/react-dom-test-utils.production.min";
 import Loader from "../components/Loader";
 import Movies from "../components/Movies";
 import Search from "../components/Search";
