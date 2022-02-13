@@ -7,7 +7,6 @@ export default class Main extends Component {
   state = {
     movies: [],
     loading:true,
-    res: []
 
   };
   componentDidMount() {
@@ -21,12 +20,11 @@ export default class Main extends Component {
     this.setState({loading: true})
     fetch(`http://www.omdbapi.com/?apikey=be99c5e7&s=${str === '' ? 'panda' : str}${type !== 'all' ? `&type=${type}` : ''}`)
       .then((res) => res.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false, res:data }));      
+      .then((data) => this.setState({ movies: data.Search, loading: false, }));      
   }
 
 
   render() {
-  console.log(this.state.res);
 
     return (
       <>
