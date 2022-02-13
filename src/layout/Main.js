@@ -1,42 +1,44 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../components/Loader";
 import Movies from "../components/Movies";
 import Search from "../components/Search";
 
-export default class Main extends Component {
-  state = {
-    movies: [],
-    loading:true,
+export default function Main() {
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  };
-  componentDidMount() {
-    this.setState({loading: true})
+  useEffect(() => {
+    setLoading(true);
     fetch("https://www.omdbapi.com/?apikey=be99c5e7&s=panda")
       .then((res) => res.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false }));
-  }
+      .then((data) => {
+        setMovies(data.Search);
+        setLoading(false)
+        
+      });
+  },[]);
 
-  searchMovies = (str,type = 'all') => {
-    this.setState({loading: true})
-    fetch(`https://www.omdbapi.com/?apikey=be99c5e7&s=${str === '' ? 'panda' : str}${type !== 'all' ? `&type=${type}` : ''}`)
+  const searchMovies = (str, type = "all") => {
+    setLoading(true)
+
+    fetch(
+      `https://www.omdbapi.com/?apikey=be99c5e7&s=${
+        str === "" ? "panda" : str
+      }${type !== "all" ? `&type=${type}` : ""}`
+    )
       .then((res) => res.json())
-      .then((data) => this.setState({ movies: data.Search, loading: false, }));      
-  }
+      .then((data) => {
+        setLoading(false)
+        setMovies(data.Search)
+      });
+  };
 
-
-  render() {
-
-    return (
-      <>
-        <div className="container content">
-        <Search searchMovie={this.searchMovies}/>
-          {!this.state.loading ? (
-            <Movies movies={this.state.movies} />
-          ) : (
-            <Loader />
-          )}
-        </div>
-      </>
-    );
-  }
+  return (
+    <>
+      <div className="container content">
+        <Search searchMovie={searchMovies} />
+        {!loading ? <Movies movies={movies} /> : <Loader />}
+      </div>
+    </>
+  );
 }
