@@ -11,14 +11,14 @@ export default class Main extends Component {
   };
   componentDidMount() {
     this.setState({loading: true})
-    fetch("http://www.omdbapi.com/?apikey=be99c5e7&s=panda")
+    fetch("https://www.omdbapi.com/?apikey=be99c5e7&s=panda")
       .then((res) => res.json())
       .then((data) => this.setState({ movies: data.Search, loading: false }));
   }
 
   searchMovies = (str,type = 'all') => {
     this.setState({loading: true})
-    fetch(`http://www.omdbapi.com/?apikey=be99c5e7&s=${str === '' ? 'panda' : str}${type !== 'all' ? `&type=${type}` : ''}`)
+    fetch(`https://www.omdbapi.com/?apikey=be99c5e7&s=${str === '' ? 'panda' : str}${type !== 'all' ? `&type=${type}` : ''}`)
       .then((res) => res.json())
       .then((data) => this.setState({ movies: data.Search, loading: false, }));      
   }
